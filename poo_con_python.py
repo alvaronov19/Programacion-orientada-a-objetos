@@ -31,14 +31,26 @@ class Personaje:
         enemigo.vida = enemigo.vida - daño
         print(self.nombre, "Ha realizado", daño, "puntos de daño a", enemigo.nombre)
         print("Vida de", enemigo.nombre, "es:", enemigo.vida)
+
+#Creando clase Guerrero que herada de su clase padre "Personaje"
+class Guerrero(Personaje):
+    #Sobreescribir el constructor 
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
+        #Llamar a la clase padre
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.espada = espada
+hercules = Guerrero("Hércules", 80, 50, 100, 100, 5)
+hercules.atributos()
+print(hercules.espada)
+
 #Variable del constructor vacío de la clase 
-mi_personaje = Personaje ("Kanye", 90, 100, 80, 100)
-mi_enemigo = Personaje ("Ogro" , 90, 100, 80, 100)
+#mi_personaje = Personaje ("Kanye", 90, 100, 80, 100)
+#mi_enemigo = Personaje ("Ogro" , 90, 100, 80, 100)
 #print(mi_personaje.esta_vivo())
 #print(mi_personaje.dañar(mi_enemigo))
-mi_personaje.atributos()
-mi_personaje.atacar(mi_enemigo)
-mi_enemigo.atributos()
+#mi_personaje.atributos()
+#mi_personaje.atacar(mi_enemigo)
+#mi_enemigo.atributos()
 #mi_personaje.subir_nivel(10, 10, 0)
 #mi_personaje.atributos()
 #Modificando valores de los atributos
