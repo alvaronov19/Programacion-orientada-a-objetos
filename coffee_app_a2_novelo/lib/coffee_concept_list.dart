@@ -9,7 +9,7 @@ class CoffeeConceptList extends StatefulWidget {
 class _CoffeeConceptListState extends State<CoffeeConceptList> {
   final _pageCoffeeController = PageController(
     viewportFraction: 0.35,
-  );
+  ); 
   double _currentPage = 0.0;
 
 
