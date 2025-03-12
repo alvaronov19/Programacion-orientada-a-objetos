@@ -1,6 +1,8 @@
 import 'package:coffee_app_a2_novelo/coffee.dart';
 import 'package:flutter/material.dart';
 
+const _duration = Duration(milliseconds: 300);
+
 class CoffeeConceptList extends StatefulWidget {
   @override
   _CoffeeConceptListState createState() => _CoffeeConceptListState();
@@ -10,7 +12,9 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
   final _pageCoffeeController = PageController(
     viewportFraction: 0.35,
   ); 
+  final _pageTextController = PageController();
   double _currentPage = 0.0;
+  double _textPage = 0.0;
 
 
   void _coffeeScrollListner() {
@@ -20,16 +24,24 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
     });
   }
 
+  void _textScrollListener(){
+    _textPage = _currentPage;
+
+  }
+
   @override
   void initState() {
     _pageCoffeeController.addListener(_coffeeScrollListner);
+    _pageTextController.addListener(_textScrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
     _pageCoffeeController.removeListener(_coffeeScrollListner);
+    _pageTextController.removeListener(_textScrollListener);
     _pageCoffeeController.dispose();
+    _pageTextController.dispose();
     super.dispose();
   }
 
@@ -60,15 +72,6 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
                 ],
               ),
             ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            height: 100,
-            child: Container(
-              color: Colors.red,
-            ),    
           ),
           Transform.scale(
             scale: 1.6,
@@ -104,9 +107,46 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
                       fit: BoxFit.fitHeight,
                       )),
               ));
+              
             },
           ),
-      )],
+      ),
+      Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            height: 100,
+            child: Column(
+              children: [
+                Expanded (
+                  child: PageView.builder(
+                    itemCount: coffees.length,
+                    controller: _pageTextController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final opacity = (1-(index - _textPage).abs()).clamp(0.0, 1.0);
+                      return Opacity(
+                        opacity: opacity,
+                        child: Text(
+                          coffees[index].name,
+                        ),
+                      );
+                    }),
+                ),
+                AnimatedSwitcher(
+                  duration: _duration,
+                  child: Text(
+                    '\$${coffees[_currentPage.toInt()].price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
+                    key: Key(coffees[_currentPage.toInt()].name),
+                  ),
+                ),
+              ],
+            ),    
+          ),
+        ],
       ),
     );
   }
