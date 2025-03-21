@@ -76,41 +76,47 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
           Transform.scale(
             scale: 1.6,
             alignment: Alignment.bottomCenter,
-          child: PageView.builder(
-            controller: _pageCoffeeController,
-            scrollDirection: Axis.vertical,
-            itemCount: coffees.length + 1,
-            itemBuilder: (context, index){
-              if (index == 0) {
-                return const SizedBox.shrink();
-              }
-              final coffee = coffees[index-1];
-              final result = _currentPage - index + 1;
-              final value = -0.4 * result + 1; 
-              final opacity = value.clamp(0.0, 1.0);
+            child: PageView.builder(
+              controller: _pageCoffeeController,
+              scrollDirection: Axis.vertical,
+              itemCount: coffees.length + 1,
+              onPageChanged: (value){
+                if (value < coffees.length) {
+                  _pageTextController.animateToPage(
+                    value,
+                    duration: _duration,
+                    curve: Curves.easeOut,
+                  );
+                }
+              },
+              itemBuilder: (context, index){
+                if (index == 0) {
+                return const SizedBox.shrink();}
+                final coffee = coffees[index-1];
+                final result = _currentPage - index + 1;
+                final value = -0.4 * result + 1; 
+                final opacity = value.clamp(0.0, 1.0);
               
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-              child: Transform(
-                alignment: Alignment.bottomCenter,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..translate(
-                    0.0,
-                    size.height/2.6 *(1-value).abs(),
-                  ) 
-                  ..scale(value),
-                  child: Opacity(
-                    opacity: opacity, 
-                    child: Image.asset(
-                      coffee.image,
-                      fit: BoxFit.fitHeight,
-                      )),
-              ));
-              
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Transform(
+                    alignment: Alignment.bottomCenter,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001)
+                      ..translate(0.0, size.height/2.6 *(1-value).abs(),) 
+                      ..scale(value),
+                    child: Opacity(
+                      opacity: opacity, 
+                      child: Image.asset(
+                        coffee.image,
+                        fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+              );  
             },
           ),
-      ),
+        ),
       Positioned(
             left: 0,
             top: 0,
@@ -127,12 +133,22 @@ class _CoffeeConceptListState extends State<CoffeeConceptList> {
                       final opacity = (1-(index - _textPage).abs()).clamp(0.0, 1.0);
                       return Opacity(
                         opacity: opacity,
+                        child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: size.width* 0.2),
                         child: Text(
                           coffees[index].name,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
+                      ),
                       );
                     }),
                 ),
+                const SizedBox(height: 12,),
                 AnimatedSwitcher(
                   duration: _duration,
                   child: Text(

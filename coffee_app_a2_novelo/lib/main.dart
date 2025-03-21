@@ -1,14 +1,16 @@
 import 'package:coffee_app_a2_novelo/coffee_concept_list.dart';
 import 'package:flutter/material.dart';
 
+void main() => runApp(MainCoffeeConceptApp());
 class MainCoffeeConceptApp extends StatelessWidget {
   const MainCoffeeConceptApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.dark(),
-      child: CoffeeConceptList(),
+    return MaterialApp(
+      theme: ThemeData.dark(),
+      //child: CoffeeConceptList(),
+      home: CoffeeConceptList(),
     );
   }
 }
