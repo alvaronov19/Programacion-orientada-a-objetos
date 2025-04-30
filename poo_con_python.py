@@ -32,6 +32,26 @@ class Personaje:
         print(self.nombre, "Ha realizado", daño, "puntos de daño a", enemigo.nombre)
         print("Vida de", enemigo.nombre, "es:", enemigo.vida)
 
+<<<<<<< HEAD
+    def personajeMasVida(personajes):
+    max_vida = max(personajes, key=lambda p: p.vida)
+    print(f"El personaje con más vida es {max_vida.nombre} con {max_vida.vida} puntos de vida.")
+
+    def sumaInteligencia(personajes):
+        total_inteligencia = sum(p.inteligencia for p in personajes)
+        print(f"La inteligencia total de los personajes es: {total_inteligencia}")
+
+    def personajesVidaMayorA(personajes, valor_vida):
+        filtrados = [p for p in personajes if p.vida > valor_vida]
+        if filtrados:
+            print(f"Los personajes con vida mayor a {valor_vida} son:")
+            for p in filtrados:
+                print(f"- {p.nombre}: {p.vida} puntos de vida")
+        else:
+            print(f"No hay personajes con vida mayor a {valor_vida}.")
+
+    
+=======
 #Creando clase Guerrero que herada de su clase padre "Personaje"
 class Guerrero(Personaje):
     #Sobreescribir el constructor 
@@ -94,6 +114,7 @@ diosito.atributos()
 #hercules.atributos()
 #print(hercules.espada)
 
+>>>>>>> 50a1277ccdd8a23f77635bbe7469bd7e47f9a9a8
 #Variable del constructor vacío de la clase 
 #mi_personaje = Personaje ("Kanye", 90, 100, 80, 100)
 #mi_enemigo = Personaje ("Ogro" , 90, 100, 80, 100)
